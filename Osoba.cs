@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace skyline_project
 {
-    internal interface Osoba
+    internal interface IPerson
     {
-        string ime { get; set; }
-        string prezime {  get; set; }
-        DateTime? datumRodjenja { get; set; }
-        int broj_telefona { get; set; }
+        string name { get; set; }
+        string lastname {  get; set; }
+        DateTime? dateOfBirth { get; set; }
+        int telephoneNumber { get; set; }
 
     }
 }
