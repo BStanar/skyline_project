@@ -13,7 +13,6 @@ namespace skyline_project
         int NumberofBuilding {  get; set; }
         int SizeOfStaff {  get; set; }
         string TypeOfBuilding {  get; set; }
-        int NumberofStaff { get; set; }
 
     }
 }
