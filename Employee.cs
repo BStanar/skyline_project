@@ -22,7 +22,7 @@ namespace skyline_project
         public DateTime StartOfEmployment
         {
             get { return _startOfEmployment; }
-            set { _role = _startOfEmployment; }
+            set { _startOfEmployment = value; }
         }
         public string Position
         {

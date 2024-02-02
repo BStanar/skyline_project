@@ -7,9 +7,8 @@ namespace skyline_project
         static void Main(string[] args)
         {
             Patient pacijent = new Patient(0, "Boris", "Stanar", 1231231, new DateTime(1996), "Male", "123123123", true);
-            pacijent.Symptoms.Add(Symptoms.Anoreksija);
-            pacijent.Symptoms.Add(Symptoms.Eksophthalmos);
 
+            pacijent.AddSymptoms();
 
 
             Console.ReadKey();
