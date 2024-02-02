@@ -11,7 +11,6 @@ namespace skyline_project
             pacijent.Symptoms.Add(Symptoms.Eksophthalmos);
 
 
-            Console.Write( pacijent.ListPatientWithSymptoms());
 
             Console.ReadKey();
 

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace skyline_project
 {
-    internal class SpecijalistickaKlinika
+    internal enum DepartmentTypes
     {
+        Specijalisticka_klinika,
+        Prijem,
+        Bolnica,
+        Hitna
     }
 }

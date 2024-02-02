@@ -8,18 +8,57 @@ namespace skyline_project
 {
     public abstract class Person
     {
-        protected int ID { get;  }
-        public string Lastname {  get; set; }
-        public string Firstname { get; set; }
-        protected int JMBG {  get; set; }
-        public DateTime DateBirth { get; set; }
-        public string Sex { get; set; }
-        protected string PhoneNumber {  get; set; }
+        private int _id;
+        private string _lastname;
+        private string _firstname;
+        private int _jmbg;
+        private DateTime _dateBirth;
+        private string _sex;
+        private string _phoneNumber;
+        public int ID 
+        { 
+            get { return _id; } 
+        }
+        public string Lastname
+        {
+            get { return _lastname; }
+            set { _lastname = value; }
+        }
+
+        public string Firstname
+        {
+            get { return _firstname; }
+            set { _firstname = value; }
+        }
+
+        public int JMBG
+        {
+            get { return _jmbg; }
+            set { _jmbg = value; }
+        }
+
+        public DateTime DateBirth
+        {
+            get { return _dateBirth; }
+            set { _dateBirth = value; }
+        }
+
+        public string Sex
+        {
+            get { return _sex; }
+            set { _sex = value; }
+        }
+
+        public string PhoneNumber
+        {
+            get { return _phoneNumber; }
+            set { _phoneNumber = value; }
+        }
 
 
         public Person(int id, string firstName, string lastname, int jmbg, DateTime dateBirth, string sex, string phoneNumber)
         {
-            this.ID = id;
+            this._id = id;
             Lastname = lastname;
             Firstname = firstName;
             JMBG = jmbg;
