@@ -8,9 +8,10 @@ namespace skyline_project
         {
             Patient pacijent = new Patient(0, "Boris", "Stanar", 1231231, new DateTime(1996), "Male", "123123123", true);
 
-            pacijent.AddSymptoms();
+            //pacijent.AddSymptoms();
 
-
+            int i = 323 / 100;
+            Console.WriteLine(i);
             Console.ReadKey();
 
         }
