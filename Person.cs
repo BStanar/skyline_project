@@ -67,6 +67,19 @@ namespace skyline_project
             PhoneNumber = phoneNumber;
         }
 
-        public abstract string ToString();
+        public override string ToString()
+        {
+            return Lastname +" "+ Firstname +" (" + Sex + ") "+ CalculateAge();  
+        }
+        public int CalculateAge()
+        {
+            int age = DateTime.Now.Year - DateBirth
+                .Year; ;
+
+            if (DateTime.Now.DayOfYear < DateBirth.DayOfYear)
+                age = age - 1;
+
+            return age;
+        }
     }
 }

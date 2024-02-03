@@ -8,9 +8,10 @@ namespace skyline_project
 {
     internal enum DepartmentTypes
     {
-        Specijalisticka_klinika,
-        Prijem,
-        Bolnica,
-        Hitna
+        Nije_dodjeljen=0,
+        Specijalisticka_klinika,1
+        Prijem=2,
+        Bolnica=3,
+        Hitna=4
     }
 }
