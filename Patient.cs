@@ -193,5 +193,33 @@ namespace skyline_project
                 }
             }
         }
+
+        public void RemoveSymptoms(SpecialistTypes specialistClinic)
+        {
+            if (PatientSymptoms.Count == 0)
+            {
+                Console.WriteLine("Nema simptoma za lijecenje, pacijent je zdrav");
+                IsCured = true;
+            }
+            else
+            {
+                List<Symptoms> possibleToCure = PatientSymptoms.Where(symptom=> (int)specialistClinic <= (int)symptom && (int)symptom < ((int)specialistClinic) * 2).ToList();
+                Random r = new Random();
+                Symptoms curedSymptom = (Symptoms)symptom.GetValue(r.Next(possibleToCure.Length));
+                this._patientSymptoms.Remove(curedSymptom);
+                possibleToCure.Remove(curedSymptom);
+
+
+                if (PatientSymptoms.Count > 0 && possibleToCure.Count==0) 
+                {
+                    Console.WriteLine("Treba ga premjestiti na drugu kliniku")
+                }
+                else
+                {
+                    IsCured = true;
+                }
+            }
+
+        }
     }
 }
