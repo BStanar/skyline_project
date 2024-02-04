@@ -166,8 +166,6 @@ namespace skyline_project
             }
         }
 
-        
-
         private void GetTreatmentClinics()
         {
             /*Provjerava se lista simptoma koje pacijent ima i ispisuju se sve klinike gdje pacijent treba da ode

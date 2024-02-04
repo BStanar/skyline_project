@@ -35,7 +35,7 @@ namespace skyline_project
         {
             string firstName, lastName, sex, phoneNumber;
             int jmbg;
-            DateTime dateBirth;
+            DateTime dateBirth=DateTime.MinValue;
             Boolean hasInshurance;
 
             Console.WriteLine("Unesite ime pacijenta;");

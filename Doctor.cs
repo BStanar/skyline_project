@@ -29,18 +29,28 @@ namespace skyline_project
         }
 
         public Doctor(int id, string firstName, string lastname, int jmbg, DateTime dateBirth, string sex, string phoneNumber,
-           DateTime startOfEmployment, string position, string username, string password, Boolean isheadDoctor, SpecialistTypes specialisation, EmployeeRole role, DepartmentTypes assignedToDepartment)
-           : base(id, firstName, lastname, jmbg, dateBirth, sex, phoneNumber, startOfEmployment, position, username, password,role)
+           DateTime startOfEmployment, string username, string password, Boolean isheadDoctor, SpecialistTypes specialisation, EmployeeRole role, DepartmentTypes assignedToDepartment)
+           : base(id, firstName, lastname, jmbg, dateBirth, sex, phoneNumber, startOfEmployment, username, password,role)
         {
             IsHeadDoctor = isheadDoctor;
             Specialisation = specialisation;
             AssignedToDepartment = assignedToDepartment;
         }
 
-        public void InteractWithPatient()
+        public void InteractWithPatient(Patient patient)
         {
+            if(this._assignedToDepartment==DepartmentTypes.Prijem && patient.NumberOfSymptoms==1 && (((int)patient.PatientSymptoms[0]) / 100) == 1)
+            {
+                
+                NapisiOdpusnoPismo(patient);
+            }
         }
 
-        
+        public void NapisiOdpusnoPismo(Patient patient)
+        {
+
+        }
+
+
     }
 }
