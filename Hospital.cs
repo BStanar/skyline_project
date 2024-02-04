@@ -95,6 +95,21 @@ namespace skyline_project
             return patient.PatientNeedsToVisit[index];
         }
 
-    
+        public void FromClinicToClinic(SpecialistClinic from)
+        {
+
+            if (from.TransferPatientList.Count > 0)
+            {
+                int toTypeIndex = (int)from.TransferPatientList[0].PatientSymptoms[0] / 100;
+                toTypeIndex = toTypeIndex * 100;
+                SpecialistTypes types = (SpecialistTypes)toTypeIndex;
+
+                SpecialistClinic clinic = specialists.FirstOrDefault(s => s.SpecialistType == types);
+
+                clinic.AddPatient(from.TransferPatientList[0]);
+                from.TransferPatientList.RemoveAt(0);
+            }
+
+        }
     }
 }

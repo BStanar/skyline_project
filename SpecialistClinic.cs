@@ -11,14 +11,17 @@ namespace skyline_project
         private SpecialistTypes _type;
         private int _idSpecialistClinic;
         private List<Patient> _patientsList = new List<Patient>();
+        private List<Patient> _transferPatientList = new List<Patient>();
 
         public SpecialistTypes SpecialistType { get { return _type; } }
-        public List<Patient> PatientsList { get { return _patientsList; } } 
+        public List<Patient> PatientsList { get { return _patientsList; } }
+        public List<Patient> TransferPatientList { get { return _transferPatientList; } }
         public int IdSpecialistClinic
         {
             get { return _idSpecialistClinic; }
             set { _idSpecialistClinic = value; }
         }
+
         public SpecialistClinic(string departmentName, string adress, int buildingNumber, int numberOfStaff, DepartmentTypes departmentType, SpecialistTypes specialistType)
             : base(departmentName, adress, buildingNumber, numberOfStaff, DepartmentTypes.Specijalisticka_klinika)
         {
@@ -51,16 +54,14 @@ namespace skyline_project
 
 
             PatientsList[index].RemoveSymptoms(SpecialistType);
+            
 
             if (PatientsList[index].IsCured==false && PatientsList[index].PatientSymptoms.Any(symptom => (int)symptom >= (int)SpecialistType && (int)symptom < (int)SpecialistType + 100));
             {
-                //Premjestit u drugu kliniku
+                Patient patient = PatientsList[index];
+                PatientsList.RemoveAt(index);
+                this._transferPatientList.Add(patient);
             }
-        }
-
-        public void FromClinicToClinic(SpecialistClinic from, SpecialistClinic to)
-        {
-
         }
     }
 }
