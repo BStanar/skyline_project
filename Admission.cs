@@ -10,7 +10,7 @@ namespace skyline_project
     {
         private Doctor _doctor;
         private List<Patient> _patientsList = new List<Patient>();
-        private int _patientID;
+        private int _patientID=0;
         private int _numberOfPatients;
 
         public Doctor Doctor { get { return _doctor; } set { _doctor = value; } }
@@ -140,12 +140,11 @@ namespace skyline_project
             {
                 hasInshurance = true;
             }
-            int id = this._patientID+1;
+            _patientID++;
 
-            Patient newPatient = new Patient(id,  firstName,  lastName,  jmbg, dateBirth,  sex,  phoneNumber,  hasInshurance);
+            Patient newPatient = new Patient(_patientID,  firstName,  lastName,  jmbg, dateBirth,  sex,  phoneNumber,  hasInshurance);
             this._patientsList.Add(newPatient);
         }
-
 
 
     }
