@@ -68,6 +68,7 @@ namespace skyline_project
             int jmbg;
             DateTime startOfEmployment = DateTime.MinValue,dateBirth= DateTime.MinValue;
             Boolean isheadDoctor=false;
+            Console.WriteLine("Unesite podatke o doktoru");
 
             Console.WriteLine("Unesite ime doktora;");
             firstName = Console.ReadLine();

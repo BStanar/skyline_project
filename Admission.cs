@@ -21,7 +21,10 @@ namespace skyline_project
             : base(departmentName, adress, buildingNumber, numberOfStaff, DepartmentTypes.Prijem)
         {
 
-            AddPatients();
+            AddPatients();//bilo koji specijalista moze da radi na prijemu;
+            Console.Clear();
+            Console.WriteLine("Podaci za prijem");
+            AddDoctor();
         }
 
         public void PrintAllPatients()
@@ -36,13 +39,15 @@ namespace skyline_project
         public void AddPatients()
         {
             Console.WriteLine("Koliko pacijenata zelite unjet");
-            do
+            while (!int.TryParse(Console.ReadLine(), out this._numberOfPatients)) ;
             {
                 Console.WriteLine("Pogresno unjeti broj");
-            } while (int.TryParse(Console.ReadLine(), out this._numberOfPatients));
+            } 
 
             for(int i=0; i< NumberOfPAtients;i++)
             {
+                Console.Clear();
+                Console.WriteLine($"Unosite {(i + 1)}. pacijenta");
                 AddPatient();
             }
         }
@@ -146,7 +151,43 @@ namespace skyline_project
             this._patientsList.Add(newPatient);
         }
 
+        public void CheckPatients()
+        {
+            List<Patient> CheckedPatients = new List<Patient>();
+            foreach (Patient patient in PatientsList)
+            {
+                if (patient.PatientSymptoms.Count == 1 && 
+                    ((int)patient.PatientSymptoms[0])>=100 && ((int)patient.PatientSymptoms[0]) < 200)
+                {
+                    Console.WriteLine("Pacijent ima blage simptome koji se mogu izljeciti kod kuce");
+                    CheckedPatients.Add(patient);
+                    OdpusnoPismo(patient, Doctor);
+                }else
+                {
+                    patient.GetTreatmentClinics();
+                    List<SpecialistTypes> NeedsClinics= patient.PatientNeedsToVisit;
+                    if (NeedsClinics.Any())
+                    {
 
+                    }
+                }
+            }
+            foreach (var patient in CheckedPatients)
+            {
+                PatientsList.Remove(patient);
+            }
+        }
+
+
+        public void OdpusnoPismo(Patient patient, Doctor doctor)
+        {
+            Console.WriteLine($"Pacijent {patient.Firstname} {patient.Lastname} je izljecen od {patient.PatientSymptoms[0]}, Doktor  DR. {doctor.Firstname} {doctor.Lastname} je odredio terapiju.");
+        }
+
+        public void Uputnica(Patient patient, Doctor doctor)
+        {
+            Console.WriteLine($"Pacijent {patient.Firstname} {patient.Lastname} boluje od tezih simptoma salje se specijalisti {patient.PatientNeedsToVisit}, Doktor  DR. {doctor.Firstname} {doctor.Lastname} je napisao uputnicu.");
+        }
     }
 }
 

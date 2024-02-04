@@ -179,7 +179,7 @@ namespace skyline_project
             }
         }
 
-        private void GetTreatmentClinics()
+        public void GetTreatmentClinics()
         {
             /*Provjerava se lista simptoma koje pacijent ima i ispisuju se sve klinike gdje pacijent treba da ode
              * int Indeks simptoma djelimo sa 100 da bi dobili 1//2//3//4//5, pa kasnije kad trazimo specijalisticku 

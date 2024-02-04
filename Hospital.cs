@@ -25,14 +25,20 @@ namespace skyline_project
         public Admission Admission { get { return admission; } }
         /*Trebaju radncii i trebaju Odjeli*/
 
-        public Hospital(string departmentName, string adress, int buildingNumber, int numberOfStaff, DepartmentTypes departmentType, int numberOfDepartments) 
-            : base("SkylineCommunications bolnica", "Tesanjska", 24, numberOfStaff, DepartmentTypes.Bolnica)
+        public Hospital(string departmentName, string adress, int buildingNumber, int numberOfStaff) 
+            : base(departmentName, adress, buildingNumber, numberOfStaff, DepartmentTypes.Bolnica)
         {
-            NumberOfDepartments = numberOfDepartments;
+            NumberOfDepartments = Enum.GetNames(typeof(SpecialistTypes)).Length+1; 
+
             this.admission = new Admission(departmentName, adress, buildingNumber, 1, DepartmentTypes.Prijem);
+
             for(int i=0;i< Enum.GetNames(typeof(SpecialistTypes)).Length;i++)
             {
+                Console.Clear();
+                Console.WriteLine($"Unesite podatke o dkotoru koji radi na {(SpecialistTypes)i}");
                 SpecialistClinic clinic = new SpecialistClinic($"Specijalisticka klinika za {(SpecialistTypes)i}",adress,buildingNumber,1,DepartmentTypes.Specijalisticka_klinika,(SpecialistTypes)i);
+                clinic.AddDoctor();
+                specialists.Add(clinic);
             }
         }
 
