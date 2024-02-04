@@ -14,7 +14,7 @@ namespace skyline_project
 
         public DepartmentTypes AssignedToDepartment
         {
-            get { return _assignedToDepartment} 
+            get { return _assignedToDepartment; } 
             set { _assignedToDepartment = value; }
         }
         public Boolean IsHeadDoctor 
@@ -39,7 +39,6 @@ namespace skyline_project
 
         public void InteractWithPatient()
         {
-            if(_assignedToDepartment==)
         }
 
         
