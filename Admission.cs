@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -122,7 +123,7 @@ namespace skyline_project
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Not a valid date");
+                    Console.WriteLine("Not a valid date"+e);
                 }
             }
 
@@ -165,17 +166,13 @@ namespace skyline_project
                 }else
                 {
                     patient.GetTreatmentClinics();
-                    List<SpecialistTypes> NeedsClinics= patient.PatientNeedsToVisit;
-                    if (NeedsClinics.Any())
-                    {
-
-                    }
+                    Uputnica( patient, Doctor);
                 }
             }
             foreach (var patient in CheckedPatients)
             {
                 PatientsList.Remove(patient);
-            }
+            }//ostaju pacijenti koji se trebaju poslati
         }
 
 
@@ -188,6 +185,13 @@ namespace skyline_project
         {
             Console.WriteLine($"Pacijent {patient.Firstname} {patient.Lastname} boluje od tezih simptoma salje se specijalisti {patient.PatientNeedsToVisit}, Doktor  DR. {doctor.Firstname} {doctor.Lastname} je napisao uputnicu.");
         }
+
+        public Patient SendForTreatment(int indeks)
+        {
+            Patient patientTreatment = PatientsList[indeks];
+            PatientsList.Remove(patientTreatment);
+            return patientTreatment;
+        } 
     }
 }
 

@@ -10,8 +10,8 @@ namespace skyline_project
     abstract class Department
     {
         private DepartmentTypes _departmentType;
-        private string _departmentName;
-        private string _adress;
+        private string? _departmentName;
+        private string? _adress;
         private int _buildingNumber;
         private int _numberOfStaff;
         private List<Doctor> _doctors = new List<Doctor>();
@@ -23,12 +23,12 @@ namespace skyline_project
             get { return _departmentType; }
             set { _departmentType = value; }
         }
-        public string DepartmentName
+        public string? DepartmentName
         {
             get { return _departmentName; }
             set { _departmentName = value; }
         }
-        public string Adress
+        public string? Adress
         {
             get { return _adress; }
             set { _adress = value; }
@@ -64,31 +64,31 @@ namespace skyline_project
 
         public void AddDoctor()
         {
-            string firstName, lastName, sex, phoneNumber,username,password;
+            string? firstName ="", lastName = "", sex = "", phoneNumber = "", username = "", password = "";
             int jmbg;
             DateTime startOfEmployment = DateTime.MinValue,dateBirth= DateTime.MinValue;
             Boolean isheadDoctor=false;
-            Console.WriteLine("Unesite podatke o doktoru");
+            Console.WriteLine("Unesite podatke o doktoru :");
 
-            Console.WriteLine("Unesite ime doktora;");
+            Console.WriteLine("Unesite ime doktora :");
             firstName = Console.ReadLine();
-            Console.WriteLine("Unesite prezime doktora;");
+            Console.WriteLine("Unesite prezime doktora :");
             lastName = Console.ReadLine();
-            Console.WriteLine("Unesite spol doktora;");
+            Console.WriteLine("Unesite spol doktora :");
             sex = Console.ReadLine();
-            Console.WriteLine("Unesite broj telefona doktora;");
+            Console.WriteLine("Unesite broj telefona doktora :");
             phoneNumber = Console.ReadLine();
 
             jmbg = GetJMBG();
 
-            Console.WriteLine("Unesite rodjenje doktora");
+            Console.WriteLine("Unesite rodjenje doktora :");
             dateBirth = GetDate();
 
-            Console.WriteLine("Unesite pocetak rada doktora");
+            Console.WriteLine("Unesite pocetak rada doktora :");
             startOfEmployment = GetDate();
-            Console.WriteLine("Unesite korisnicko ime  doktora");
+            Console.WriteLine("Unesite korisnicko ime  doktora :");
             username = Console.ReadLine();
-            Console.WriteLine("Unesite sifru  doktora");
+            Console.WriteLine("Unesite sifru  doktora :");
             password = Console.ReadLine();
 
             isheadDoctor = IsHead();
@@ -97,6 +97,8 @@ namespace skyline_project
             _doctorID++;
             Doctor NewDoctor = new Doctor(_doctorID, firstName, lastName, jmbg, dateBirth,sex,phoneNumber,startOfEmployment,username,password,isheadDoctor, specialistTypes, EmployeeRole.Doktor,DepartmentType);
             this._doctors.Add(NewDoctor);
+            Console.WriteLine(NewDoctor.ToString());
+            Console.ReadKey();
         }
 
         public DateTime GetDate()
@@ -107,7 +109,7 @@ namespace skyline_project
             while (!isValidDate)
             {
                 i = 0;
-                Console.WriteLine("Unesite godinu rodjenja");
+                Console.WriteLine("Unesite godinu ");
                 while (!int.TryParse(Console.ReadLine(), out year) || year < 1900 || year > DateTime.Now.Year)
                 {
                     if (i == 0)
@@ -118,7 +120,7 @@ namespace skyline_project
                 }
 
                 i = 0;
-                Console.WriteLine("Unesite mjesec rodjenja");
+                Console.WriteLine("Unesite mjesec ");
                 while (!int.TryParse(Console.ReadLine(), out month) || month < 1 || month > 12)
                 {
                     if (i == 0)
@@ -129,7 +131,7 @@ namespace skyline_project
                 }
 
                 i = 0;
-                Console.WriteLine("Unesite dan rodjenja");
+                Console.WriteLine("Unesite dan ");
                 while (!int.TryParse(Console.ReadLine(), out day) || day < 1 || day > DateTime.DaysInMonth(year, month))
                 {
                     if (i == 0)

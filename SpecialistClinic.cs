@@ -10,17 +10,57 @@ namespace skyline_project
     {
         private SpecialistTypes _type;
         private int _idSpecialistClinic;
-        private Doctor _doctor;
+        private List<Patient> _patientsList = new List<Patient>();
 
-        public Doctor Doctor { get { return _doctor; } }
-        public SpecialistTypes SpecialistTypes { get { return _type; } }
-        public int IdSpecialistClinic { get { return _idSpecialistClinic; } }
+        public SpecialistTypes SpecialistType { get { return _type; } }
+        public List<Patient> PatientsList { get { return _patientsList; } } 
+        public int IdSpecialistClinic
+        {
+            get { return _idSpecialistClinic; }
+            set { _idSpecialistClinic = value; }
+        }
         public SpecialistClinic(string departmentName, string adress, int buildingNumber, int numberOfStaff, DepartmentTypes departmentType, SpecialistTypes specialistType)
             : base(departmentName, adress, buildingNumber, numberOfStaff, DepartmentTypes.Specijalisticka_klinika)
         {
             this._type = specialistType;
-            this._idSpecialistClinic = IdSpecialistClinic;//Promjeniti da pogleda u xml fajl i odatle izvlaci id
-            this._doctor = new Doctor(0, "Ime doktora", "Prezime doktora", 102312, DateTime.Now, "M", "12312312", DateTime.MinValue, "doktor1", "password", true, specialistType, EmployeeRole.Doktor, DepartmentTypes.Specijalisticka_klinika);
+            IdSpecialistClinic = (int)specialistType;//Promjeniti da pogleda u xml fajl i odatle izvlaci id
+            AddDoctor();
+        }
+
+        public void AddPatient(Patient patient)
+        {
+            this._patientsList.Add(patient);
+        }
+
+        public void TreatPatient()
+        {
+            Console.WriteLine("Pacijenti koji se trebaju lijeciti specijalisti");
+            int index, NumberOFTreatabels = PatientsList.Count;
+
+            for (int i = 0; i < NumberOFTreatabels; i++)
+            {
+                Console.WriteLine($"{(i)}. pacijent {PatientsList[i]}");
+            }
+
+            Console.WriteLine("Unesite indeks pacijenta, kojeg zelite ljeciti");
+            do
+            {
+                Console.WriteLine("Pogresna vrijednost");
+
+            } while (!int.TryParse(Console.ReadLine(), out index) && (index < 0 || index >= NumberOFTreatabels));
+
+
+            PatientsList[index].RemoveSymptoms(SpecialistType);
+
+            if (PatientsList[index].IsCured==false && PatientsList[index].PatientSymptoms.Any(symptom => (int)symptom >= (int)SpecialistType && (int)symptom < (int)SpecialistType + 100));
+            {
+                //Premjestit u drugu kliniku
+            }
+        }
+
+        public void FromClinicToClinic(SpecialistClinic from, SpecialistClinic to)
+        {
+
         }
     }
 }

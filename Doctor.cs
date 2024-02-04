@@ -37,20 +37,9 @@ namespace skyline_project
             AssignedToDepartment = assignedToDepartment;
         }
 
-        public void InteractWithPatient(Patient patient)
+        public override string ToString()
         {
-            if(this._assignedToDepartment==DepartmentTypes.Prijem && patient.NumberOfSymptoms==1 && (((int)patient.PatientSymptoms[0]) / 100) == 1)
-            {
-                
-                NapisiOdpusnoPismo(patient);
-            }
+            return $"Doktor {Firstname} {Lastname} DR. {Specialisation} zaduzen na {AssignedToDepartment}";
         }
-
-        public void NapisiOdpusnoPismo(Patient patient)
-        {
-
-        }
-
-
     }
 }
