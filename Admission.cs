@@ -11,15 +11,17 @@ namespace skyline_project
         private Doctor _doctor;
         private List<Patient> _patientsList = new List<Patient>();
         private int _patientID;
-
+        private int _numberOfPatients;
 
         public Doctor Doctor { get { return _doctor; } set { _doctor = value; } }
         public List<Patient> PatientsList { get { return _patientsList; } }
+        public int NumberOfPAtients {  get { return _numberOfPatients; } }
 
         public Admission(string departmentName, string adress, int buildingNumber, int numberOfStaff, DepartmentTypes departmentType)
             : base(departmentName, adress, buildingNumber, numberOfStaff, DepartmentTypes.Prijem)
         {
 
+            AddPatients();
         }
 
         public void PrintAllPatients()
@@ -31,8 +33,22 @@ namespace skyline_project
             }
         }
 
+        public void AddPatients()
+        {
+            Console.WriteLine("Koliko pacijenata zelite unjet");
+            do
+            {
+                Console.WriteLine("Pogresno unjeti broj");
+            } while (int.TryParse(Console.ReadLine(), out this._numberOfPatients));
+
+            for(int i=0; i< NumberOfPAtients;i++)
+            {
+                AddPatient();
+            }
+        }
         public void AddPatient()
         {
+            
             string firstName, lastName, sex, phoneNumber;
             int jmbg;
             DateTime dateBirth=DateTime.MinValue;
@@ -124,9 +140,9 @@ namespace skyline_project
             {
                 hasInshurance = true;
             }
+            int id = this._patientID+1;
 
-
-            Patient newPatient = new Patient(this._patientsList.Count,  firstName,  lastName,  jmbg, dateBirth,  sex,  phoneNumber,  hasInshurance);
+            Patient newPatient = new Patient(id,  firstName,  lastName,  jmbg, dateBirth,  sex,  phoneNumber,  hasInshurance);
             this._patientsList.Add(newPatient);
         }
 

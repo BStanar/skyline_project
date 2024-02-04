@@ -17,6 +17,7 @@ namespace skyline_project
         private Boolean _hasInsurance;
         private Boolean _isCured;
         private List<SpecialistTypes> _patientNeedsToVisit = new List<SpecialistTypes>();
+        private DepartmentTypes _patientIsInDepartment;
 
         public int NumberOfSymptoms
         {
@@ -41,6 +42,10 @@ namespace skyline_project
         {
             get { return _patientNeedsToVisit; }
 }
+        public DepartmentTypes PatientIsInDepartment 
+        {
+            get { return _patientIsInDepartment; }
+        }
 
         public Patient(int id, string firstName, string lastname, int jmbg, DateTime dateBirth, string sex, string phoneNumber, Boolean hasInshurance) :
             base( id,  firstName,  lastname,  jmbg,  dateBirth,  sex,  phoneNumber)
@@ -49,7 +54,7 @@ namespace skyline_project
             IsCured= false;
             NumberOfSymptoms = 1;
             AddSymptoms();
-
+            _patientIsInDepartment = DepartmentTypes.Prijem;
         }
 
         public override string ToString()
@@ -62,22 +67,12 @@ namespace skyline_project
             GetNumberSymptoms();
             GenerateSymptoms(NumberOfSymptoms);
         }
-
         public void AddRandomSymptoms()
         {
             GetNumberSymptoms();
             GenerateRandomSymptoms(NumberOfSymptoms);
         }
-
-        public void GetNumberSymptoms()
-        {
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("Koliko simpotoma ima pacijent");
-            } while (!int.TryParse(Console.ReadLine(), out this._numberOfSymptoms));
-        }
-
+        
         private void GenerateSymptoms(int numberOfSymptoms)
         {
             /*  U for petlji iniciramo i=0 i range=100, opseg se postavlja na 100 jer su simptomi i specijalisticke klinike koji ih lijece grupisani 
@@ -121,6 +116,24 @@ namespace skyline_project
             this._patientSymptoms = symptomsList;
             if (numberOfSymptoms!=0)
                 GenerateRandomSymptoms(numberOfSymptoms);
+        }
+        private void GenerateRandomSymptoms(int numberOfSymptoms)
+        {
+
+            Random r = new Random();
+            Symptoms[] allSymptoms = Enum.GetValues<Symptoms>();
+            for (int i = 0; i < numberOfSymptoms; i++)
+            {
+                Symptoms randomSymptom = (Symptoms)allSymptoms[r.Next(allSymptoms.Length)];
+                if (!this._patientSymptoms.Contains(randomSymptom))
+                {
+                    this._patientSymptoms.Add(randomSymptom);
+                }
+                else
+                {
+                    i--;
+                }
+            }
         }
 
         public void RemoveSymptoms(SpecialistTypes specialistClinic)
@@ -185,24 +198,14 @@ namespace skyline_project
                 this._patientNeedsToVisit.Add(clinic);
     }
         }
-
-        private void GenerateRandomSymptoms(int numberOfSymptoms)
+        public void GetNumberSymptoms()
         {
-            
-            Random r = new Random(); 
-            Symptoms[] allSymptoms = Enum.GetValues<Symptoms>();
-            for (int i = 0; i < numberOfSymptoms; i++)
+            do
             {
-                Symptoms randomSymptom = (Symptoms)allSymptoms[r.Next(allSymptoms.Length)];
-                if (!this._patientSymptoms.Contains(randomSymptom))
-                {
-                    this._patientSymptoms.Add(randomSymptom);
-                }
-                else
-                {
-                    i--;
-                }
-            }
+                Console.Clear();
+                Console.WriteLine("Koliko simpotoma ima pacijent");
+            } while (!int.TryParse(Console.ReadLine(), out this._numberOfSymptoms));
         }
+
     }
 }
