@@ -14,7 +14,7 @@ namespace skyline_project
 
         public DepartmentTypes AssignedToDepartment
         {
-            get { return _assignedToDepartment} 
+            get { return _assignedToDepartment; } 
             set { _assignedToDepartment = value; }
         }
         public Boolean IsHeadDoctor 
@@ -29,19 +29,17 @@ namespace skyline_project
         }
 
         public Doctor(int id, string firstName, string lastname, int jmbg, DateTime dateBirth, string sex, string phoneNumber,
-           DateTime startOfEmployment, string position, string username, string password, Boolean isheadDoctor, SpecialistTypes specialisation, EmployeeRole role, DepartmentTypes assignedToDepartment)
-           : base(id, firstName, lastname, jmbg, dateBirth, sex, phoneNumber, startOfEmployment, position, username, password,role)
+           DateTime startOfEmployment, string username, string password, Boolean isheadDoctor, SpecialistTypes specialisation, EmployeeRole role, DepartmentTypes assignedToDepartment)
+           : base(id, firstName, lastname, jmbg, dateBirth, sex, phoneNumber, startOfEmployment, username, password,role)
         {
             IsHeadDoctor = isheadDoctor;
             Specialisation = specialisation;
             AssignedToDepartment = assignedToDepartment;
         }
 
-        public void InteractWithPatient()
+        public override string ToString()
         {
-            if(_assignedToDepartment==)
+            return $"Doktor {Firstname} {Lastname} DR. {Specialisation} zaduzen na {AssignedToDepartment}";
         }
-
-        
     }
 }

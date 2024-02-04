@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -16,6 +17,7 @@ namespace skyline_project
         private Boolean _hasInsurance;
         private Boolean _isCured;
         private List<SpecialistTypes> _patientNeedsToVisit = new List<SpecialistTypes>();
+        private DepartmentTypes _patientIsInDepartment;
 
         public int NumberOfSymptoms
         {
@@ -40,6 +42,10 @@ namespace skyline_project
         {
             get { return _patientNeedsToVisit; }
 }
+        public DepartmentTypes PatientIsInDepartment 
+        {
+            get { return _patientIsInDepartment; }
+        }
 
         public Patient(int id, string firstName, string lastname, int jmbg, DateTime dateBirth, string sex, string phoneNumber, Boolean hasInshurance) :
             base( id,  firstName,  lastname,  jmbg,  dateBirth,  sex,  phoneNumber)
@@ -48,12 +54,12 @@ namespace skyline_project
             IsCured= false;
             NumberOfSymptoms = 1;
             AddSymptoms();
-
+            _patientIsInDepartment = DepartmentTypes.Prijem;
         }
 
         public override string ToString()
         {
-            return $"Patient ID:{ID}\tName: {Firstname} Lastname: {Lastname}, Sex: {Sex}, Age: {Person.}\n Symptoms:\t-"+string.Join(",\n\t\t-", PatientSymptoms);
+            return $"Patient ID:{ID}\tName: {Firstname} Lastname: {Lastname}, Sex: {Sex}, Age: {this.CalculateAge}\n Symptoms:\t-"+string.Join(",\n\t\t-", PatientSymptoms);
         }
 
         public void AddSymptoms() 
@@ -61,22 +67,12 @@ namespace skyline_project
             GetNumberSymptoms();
             GenerateSymptoms(NumberOfSymptoms);
         }
-
         public void AddRandomSymptoms()
         {
             GetNumberSymptoms();
             GenerateRandomSymptoms(NumberOfSymptoms);
         }
-
-        public void GetNumberSymptoms()
-        {
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("Koliko simpotoma ima pacijent");
-            } while (!int.TryParse(Console.ReadLine(), out this._numberOfSymptoms));
-        }
-
+        
         private void GenerateSymptoms(int numberOfSymptoms)
         {
             /*  U for petlji iniciramo i=0 i range=100, opseg se postavlja na 100 jer su simptomi i specijalisticke klinike koji ih lijece grupisani 
@@ -121,41 +117,69 @@ namespace skyline_project
             if (numberOfSymptoms!=0)
                 GenerateRandomSymptoms(numberOfSymptoms);
         }
+        private void GenerateRandomSymptoms(int numberOfSymptoms)
+        {
+
+            Random r = new Random();
+            Symptoms[] allSymptoms = Enum.GetValues<Symptoms>();
+            for (int i = 0; i < numberOfSymptoms; i++)
+            {
+                Symptoms randomSymptom = (Symptoms)allSymptoms[r.Next(allSymptoms.Length)];
+                if (!this._patientSymptoms.Contains(randomSymptom))
+                {
+                    this._patientSymptoms.Add(randomSymptom);
+                }
+                else
+                {
+                    i--;
+                }
+            }
+        }
 
         public void RemoveSymptoms(SpecialistTypes specialistClinic)
         {
             /*  Kreira listu simptoma koji se mogu izljeciti, tako sto dodjae sve simptome ciji je indeks <= indeksu specijalisticke klinike 
              *  i manji od 2*index spec klinike nasumicno se bira jedan od simptoma iz liste za lijecenje, izabrani simptom se brise iz liste 
-             *  liste simpoma od pacijenta*/
-            List<Symptoms> possibleToCure = PatientSymptoms.Where(symptom => (int)specialistClinic <= (int)symptom && (int)symptom < ((int)specialistClinic) * 2).ToList();
+             *  liste simpoma od pacijenta    */
+            if (PatientSymptoms.Count != 0 && IsCured == false)
+            {
 
-            if (IsCured)
-            {
-                Console.WriteLine("Pacijent je izljecen");
-            }
-            else if (possibleToCure.Count==0)
-            {
-                GetTreatmentClinics();
-            }
-            else
-            {
-                Random r = new Random();
-                Symptoms curedSymptom = (Symptoms)possibleToCure[r.Next(possibleToCure.Count)];
-                this._patientSymptoms.Remove(curedSymptom);
-                possibleToCure.Remove(curedSymptom);
-                if (PatientSymptoms.Count > 0 && possibleToCure.Count == 0)
+                List<Symptoms> possibleToCureInThisClinic = PatientSymptoms.Where(symptom => (int)specialistClinic <= (int)symptom && (int)symptom < ((int)specialistClinic) * 2).ToList();
+                if (possibleToCureInThisClinic.Count == 0)
                 {
+                    Console.WriteLine("Pacijent se mora prebaciti na drugu kliniku");
                     GetTreatmentClinics();
                 }
                 else
                 {
-                    IsCured=true;
+                    Random r = new Random();
+                    Symptoms curedSymptom = (Symptoms)possibleToCureInThisClinic[r.Next(possibleToCureInThisClinic.Count)];
+                    this._patientSymptoms.Remove(curedSymptom);
+                    possibleToCureInThisClinic.Remove(curedSymptom);
+                    Console.WriteLine($"Izljecen je simptom : {curedSymptom}");
+                    if(PatientSymptoms.Count==0 ) 
+                    {
+                        Console.WriteLine("Pacijent je u potpunosti izljecen treba ga poslati kuci");
+                        IsCured = true;
+                    }
+                    else  if (possibleToCureInThisClinic.Count == 0)
+                    {
+                        GetTreatmentClinics();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ima jos simptoma koji se mogu ovdje izljeciti");
+                    }
                 }
-            } 
-            
+            }
+            else
+            {
+                Console.WriteLine("Pacijent je u potpunosti izljecen treba ga poslati kuci");
+                IsCured = true;
+            }
         }
 
-        private void GetTreatmentClinics()
+        public void GetTreatmentClinics()
         {
             /*Provjerava se lista simptoma koje pacijent ima i ispisuju se sve klinike gdje pacijent treba da ode
              * int Indeks simptoma djelimo sa 100 da bi dobili 1//2//3//4//5, pa kasnije kad trazimo specijalisticku 
@@ -174,52 +198,14 @@ namespace skyline_project
                 this._patientNeedsToVisit.Add(clinic);
     }
         }
-
-        private void GenerateRandomSymptoms(int numberOfSymptoms)
+        public void GetNumberSymptoms()
         {
-            
-            Random r = new Random(); 
-            Symptoms[] allSymptoms = Enum.GetValues<Symptoms>();
-            for (int i = 0; i < numberOfSymptoms; i++)
+            do
             {
-                Symptoms randomSymptom = (Symptoms)allSymptoms[r.Next(allSymptoms.Length)];
-                if (!this._patientSymptoms.Contains(randomSymptom))
-                {
-                    this._patientSymptoms.Add(randomSymptom);
-                }
-                else
-                {
-                    i--;
-                }
-            }
+                Console.Clear();
+                Console.WriteLine("Koliko simpotoma ima pacijent");
+            } while (!int.TryParse(Console.ReadLine(), out this._numberOfSymptoms));
         }
 
-        public void RemoveSymptoms(SpecialistTypes specialistClinic)
-        {
-            if (PatientSymptoms.Count == 0)
-            {
-                Console.WriteLine("Nema simptoma za lijecenje, pacijent je zdrav");
-                IsCured = true;
-            }
-            else
-            {
-                List<Symptoms> possibleToCure = PatientSymptoms.Where(symptom=> (int)specialistClinic <= (int)symptom && (int)symptom < ((int)specialistClinic) * 2).ToList();
-                Random r = new Random();
-                Symptoms curedSymptom = (Symptoms)symptom.GetValue(r.Next(possibleToCure.Length));
-                this._patientSymptoms.Remove(curedSymptom);
-                possibleToCure.Remove(curedSymptom);
-
-
-                if (PatientSymptoms.Count > 0 && possibleToCure.Count==0) 
-                {
-                    Console.WriteLine("Treba ga premjestiti na drugu kliniku")
-                }
-                else
-                {
-                    IsCured = true;
-                }
-            }
-
-        }
     }
 }

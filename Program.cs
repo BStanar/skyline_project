@@ -1,19 +1,51 @@
 ﻿using skyline_project;
 
+
 namespace skyline_project
 {
     class program
     {
         static void Main(string[] args)
         {
-            Patient pacijent = new Patient(0, "Boris", "Stanar", 1231231, new DateTime(1996,02,26), "Male", "123123123", true);
+            Hospital hospital = new Hospital("SkylineCommunications bolnica", "Tesanjska", 24, Enum.GetNames(typeof(SpecialistTypes)).Length + 1);
+            
+            
+            
+            
+            
+            
+            
+            /*HospitalMenagmentStart();
 
-            Console.WriteLine(pacijent.ToString());
-            Console.ReadKey();
-            pacijent.RemoveSymptoms(SpecialistTypes.Opća_Medicina);
-            Console.WriteLine(pacijent.ToString());
+            void HospitalMenagmentStart()
+            {
+                bool exit = false;
+                while (!exit)
+                {
+                    Console.Clear();
+                    Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                    Console.WriteLine("SkyLine Bolnica");
+                    Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n");
 
-            Console.ReadKey();
+                    Console.WriteLine("1. Log in");
+                    Console.WriteLine("0.Exit");
+
+                    string input = Console.ReadLine();
+
+                    switch (input)
+                    {
+                        case "1":
+                            Console.WriteLine("111111");
+                            break;
+                        case "0":
+                            exit = true;
+                            break;
+                        default:
+                            Console.WriteLine("Pokusajte ponovo");
+                            break;
+                    }
+                }
+            }*/
 
         }
     }

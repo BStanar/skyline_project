@@ -11,7 +11,6 @@ namespace skyline_project
         private EmployeeRole _role;
 
         private DateTime _startOfEmployment;
-        private string _position;
         private string _username;
         private string _password;
         public EmployeeRole Role 
@@ -24,11 +23,7 @@ namespace skyline_project
             get { return _startOfEmployment; }
             set { _startOfEmployment = value; }
         }
-        public string Position
-        {
-            get { return _position; }
-            set { _position = value; }
-        }
+        
         public string Username
         {
             get { return _username; }
@@ -40,11 +35,10 @@ namespace skyline_project
             set { _password = value; }
         }
         public Employee(int id, string firstName, string lastname, int jmbg, DateTime dateBirth, string sex, string phoneNumber,
-            DateTime startOfEmployment,string position,string username, string password,EmployeeRole role) 
+            DateTime startOfEmployment,string username, string password,EmployeeRole role) 
             : base(id, firstName, lastname, jmbg, dateBirth, sex, phoneNumber)
         {
             StartOfEmployment=startOfEmployment; 
-            Position=position; 
             Username=username;
             Password=password;
             Role = role;
@@ -53,7 +47,7 @@ namespace skyline_project
         
         public override string ToString()
         {
-            return $"Name: {Firstname}/tLastname: {Lastname}, Position {Position}, Years employed{DateTime.Now.Year - StartOfEmployment.Year}";
+            return $"Name: {Firstname}/tLastname: {Lastname}, Years employed{DateTime.Now.Year - StartOfEmployment.Year}";
         }
 
 
